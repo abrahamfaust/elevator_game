@@ -1,0 +1,94 @@
+:root{
+  --floor-height:110px;
+}
+
+.floor {
+  height: var(--floor-height);
+  display: flex;
+  align-items: center;
+  background-color: silver;
+  background-image: linear-gradient(335deg, #b00 23px, transparent 23px), 
+                    linear-gradient(155deg, #d00 23px, transparent 23px), 
+                    linear-gradient(335deg, #b00 23px, transparent 23px), 
+                    linear-gradient(155deg, #d00 23px, transparent 23px);
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+}
+
+.metal {
+  position: relative;
+  margin: 5px auto;
+  outline: none;
+  font: bold 4em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  text-align: center;
+  color: hsla(0,0%,20%,1);
+  text-shadow: hsla(0,0%,40%,.5) 0 -1px 0, hsla(0,0%,100%,.6) 0 2px 1px;
+  background-color: hsl(0,0%,90%);
+  box-shadow: inset hsla(0,0%,15%, 1) 0 0px 0px 4px, /* border */
+              inset hsla(0,0%,15%, .8) 0 -1px 5px 4px, /* soft SD */
+              inset hsla(0,0%,0%, .25) 0 -1px 0px 7px, /* bottom SD */
+              inset hsla(0,0%,100%,.7) 0 2px 1px 7px, /* top HL */
+              hsla(0,0%, 0%,.0) 0 -5px 6px 4px, /* outer SD */
+              hsla(0,0%,100%,.0) 0 5px 6px 4px; /* outer HL */
+  transition: color .2s;
+}
+
+/* Linear ------------------------- */
+
+.metal.linear {
+  width: 100px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .5em;
+  background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 6%, hsla(0,0%,100%, .1) 7.5%), 
+                    -webkit-repeating-linear-gradient(left, hsla(0,0%, 0%,0) 0%, hsla(0,0%, 0%,0) 4%, hsla(0,0%, 0%,.03) 4.5%), 
+                    -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%), 
+                    linear-gradient(180deg, hsl(0,0%,78%) 0%, hsl(0,0%,90%) 47%, hsl(0,0%,78%) 53%, hsl(0,0%,70%)100%);
+}
+.metal.linear p{
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+
+
+/* active ------------------------- */
+
+.metal.active {
+  transition:  all 0.2s ease-in-out;
+
+  color: hsl(127, 100%, 40%);
+  text-shadow: hsla(118, 100%, 20%, 0.3) 0 -1px 0, 
+               hsl(120, 100%, 85%) 0 2px 1px, 
+               rgb(153, 255, 173) 0 0 5px, 
+               hsla(136, 100%, 50%, 0.6) 0 0 20px;
+  box-shadow: inset rgb(3, 153, 0) 0 0px 0px 4px, /* border */
+              inset hsla(126, 100%, 15%, 0.4) 0 -1px 5px 4px, /* soft SD */
+              inset hsla(129, 100%, 20%, 0.25) 0 -1px 0px 7px, /* bottom SD */
+              inset hsla(0, 0%, 100%, 0.7) 0 2px 1px 7px, /* top HL */
+              hsla(120, 100%, 75%, 0.8) 0 0px 3px 2px, /* outer SD */
+              hsla(129, 50%, 40%, 0) 0 -5px 6px 4px, /* outer SD */
+              hsla(129, 77%, 95%, 0) 0 5px 6px 4px; /* outer HL */
+}
+
+/* error ------------------------- */
+
+
+.metal.error {
+  transition:  all 0.2s ease-in-out;
+
+  color: hsl(1, 100%, 40%);
+  text-shadow: hsla(0, 100%, 20%, 0.3) 0 -1px 0, 
+               hsl(0, 100%, 85%) 0 2px 1px, 
+               rgb(255, 153, 153) 0 0 5px, 
+               hsla(0, 100%, 50%, 0.6) 0 0 20px;
+  box-shadow: inset rgb(153, 0, 0) 0 0px 0px 4px, /* border */
+              inset hsla(0, 100%, 15%, 0.4) 0 -1px 5px 4px, /* soft SD */
+              inset hsla(0, 100%, 20%, 0.25) 0 -1px 0px 7px, /* bottom SD */
+              inset hsla(210,100%,100%,.7) 0 2px 1px 7px, /* top HL */
+              hsla(0, 100%, 75%, 0.8) 0 0px 3px 2px, /* outer SD */
+              hsla(0, 50%, 40%, 0) 0 -5px 6px 4px, /* outer SD */
+              hsla(0, 77%, 95%, 0) 0 5px 6px 4px; /* outer HL */
+}
