@@ -20,8 +20,6 @@ const floorsElevators = document.getElementById("elevators");
 const floors = document.getElementsByClassName(["metal linear"]);
 // list of all floors timer
 const timers = document.getElementsByClassName(["timer"]);
-// buttons to disable elavators and shabboss mode
-const btns = document.getElementsByClassName(["btn-container"]);
 
 // tynamic elwvator container height based on amount of floors
 floorsElevators.style.height = `${(7 + floorHeightInt) * numberOfFloors}px`;
@@ -56,19 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const moveFloor = (elevator) => {
   // on arrivel to floor play sound
-  // audio.play();
+  audio.play();
   audio.playbackRate = 7.0;
   // new current floor
   const floor = elevator.queue[0];
 
-
-
-
-
   // change floor button back to gray
-  floors[floor].classList.remove("active");
+ floors[floor].classList.remove("active");
   // hide floor timer
-  timers[floor].classList.remove("active");
+   timers[floor].classList.remove("active");
 
   // add 2 seconds of stay after arrival
   setTimeout(() => {
@@ -81,12 +75,13 @@ const moveFloor = (elevator) => {
   }, 2000);
 };
 
-const addToQueue = (floor) => {
+export const addToQueue = (floor) => {
   // can not call a floor again while it's called already
   if (floors[floor].classList.contains("active")) return;
 
   // can not call an elevator if theres current one on the same floor
   for (let i = 0; i < elevatorsArr.length; i++) {
+
     if (floor == elevatorsArr[i].floor) {
       // change floor button to red for 0.5 seconds
       floors[floor].classList.add("error");
@@ -112,13 +107,11 @@ const addToQueue = (floor) => {
   let time;
 
   for (let i = 0; i < elevatorsArr.length; i++) {
-    if (btns[i].getElementsByTagName('input')[0].checked) continue
+
     myQueue = elevatorsArr[i].queue;
 
     if (myQueue.length > 0) lastFloor = myQueue[myQueue.length - 1];
     else lastFloor = elevatorsArr[i].floor;
-
-    console.log('e: ', elevatorNum);
     
     if (elevatorNum == null ) {
       elevatorNum = i
@@ -131,7 +124,6 @@ const addToQueue = (floor) => {
       time = elevatorsArr[i].time + 0.5 * Math.abs(lastFloor - floor);
     }
   }
-  console.log('test');
 
   // use time for the floor timer until the elevator arrival in mm:ss format
   time = Math.floor(time);
@@ -145,7 +137,7 @@ const addToQueue = (floor) => {
     const formattedSeconds = String(seconds).padStart(2, "0");
     return `${formattedMinutes}:${formattedSeconds}`;
   };
-  if (elevatorNum == null ) return
+
   
   // change floor timer to the time until elevator arrival
   timers[floor].textContent = timeFormat(time);
@@ -164,7 +156,6 @@ const addToQueue = (floor) => {
     }
   }, 1000);
 
-  console.log('test2');
   const elevator = elevatorsArr[elevatorNum];
   // add elevator time to end of queue
   if (elevator.queue.length == 0) {
@@ -184,7 +175,7 @@ const addToQueue = (floor) => {
 };
 
 // move from floor to floor with animation
-const goToFloor = (elevator) => {
+export const goToFloor = (elevator) => {
   elevator.isMoving = true;
 
   elevator.object.style.transition = `transform ${
@@ -196,10 +187,10 @@ const goToFloor = (elevator) => {
 
   // change elevator current floor and time to end of queue every 0.5 seconds
   for (let i = 0; i < 4 + Math.abs(elevator.floor - elevator.queue[0]); i++) {
+    elevator.floor = elevator.queue[0];
     setTimeout(
       () => {
         elevator.time -= 0.5;
-        elevator.floor = elevator.queue[0];
       },
       500 * i,
       i
