@@ -20,6 +20,9 @@ const floorsElevators = document.getElementById("elevators");
 const floors = document.getElementsByClassName(["metal linear"]);
 // list of all floors timer
 const timers = document.getElementsByClassName(["timer"]);
+// buttons to disable elavators and shabboss mode
+const btns = document.getElementsByClassName(["btn-container"]);
+
 // tynamic elwvator container height based on amount of floors
 floorsElevators.style.height = `${(7 + floorHeightInt) * numberOfFloors}px`;
 
@@ -53,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const moveFloor = (elevator) => {
   // on arrivel to floor play sound
-  audio.play();
+  // audio.play();
   audio.playbackRate = 7.0;
   // new current floor
   const floor = elevator.queue[0];
@@ -103,25 +106,32 @@ const addToQueue = (floor) => {
     + the time it will take to come from the last floor in the queue to this floor
   **/
 
-  let elevatorNum = 0;
+  let elevatorNum = null ;
   let lastFloor;
-  let myQueue = elevatorsArr[0].queue;
-
-  if (myQueue.length > 0) lastFloor = myQueue[myQueue.length - 1];
-  else lastFloor = elevatorsArr[0].floor;
-
-  let time = elevatorsArr[0].time + 0.5 * Math.abs(lastFloor - floor);
+  let myQueue;
+  let time;
 
   for (let i = 0; i < elevatorsArr.length; i++) {
+    if (btns[i].getElementsByTagName('input')[0].checked) continue
     myQueue = elevatorsArr[i].queue;
+
     if (myQueue.length > 0) lastFloor = myQueue[myQueue.length - 1];
     else lastFloor = elevatorsArr[i].floor;
+
+    console.log('e: ', elevatorNum);
+    
+    if (elevatorNum == null ) {
+      elevatorNum = i
+      time = elevatorsArr[i].time + 0.5 * Math.abs(lastFloor - floor)
+      continue
+    }
 
     if (elevatorsArr[i].time + 0.5 * Math.abs(lastFloor - floor) < time) {
       elevatorNum = i;
       time = elevatorsArr[i].time + 0.5 * Math.abs(lastFloor - floor);
     }
   }
+  console.log('test');
 
   // use time for the floor timer until the elevator arrival in mm:ss format
   time = Math.floor(time);
@@ -135,6 +145,8 @@ const addToQueue = (floor) => {
     const formattedSeconds = String(seconds).padStart(2, "0");
     return `${formattedMinutes}:${formattedSeconds}`;
   };
+  if (elevatorNum == null ) return
+  
   // change floor timer to the time until elevator arrival
   timers[floor].textContent = timeFormat(time);
   // show floor timer
@@ -152,6 +164,7 @@ const addToQueue = (floor) => {
     }
   }, 1000);
 
+  console.log('test2');
   const elevator = elevatorsArr[elevatorNum];
   // add elevator time to end of queue
   if (elevator.queue.length == 0) {
