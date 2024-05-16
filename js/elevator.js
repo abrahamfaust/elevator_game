@@ -10,7 +10,7 @@ export const elevator = (i) => {
     btnContainer.className = 'btn-container'
     btnContainer.appendChild(btn(i, 'disabled'))
     btnContainer.appendChild(btn(i, 'shabbos'))
-    elevator.appendChild(btnContainer)
+    // elevator.appendChild(btnContainer)
 
     return elevator
 }
