@@ -91,9 +91,7 @@ const addToQueue = (floor) => {
       // change floor button to red for 0.5 seconds
       floors[num].classList.add("error");
       setTimeout(() => {
-        if (floors[num].classList.contains("error")) {
           floors[num].classList.remove("error");
-        }
       }, 500);
       return;
     }
@@ -114,6 +112,7 @@ const addToQueue = (floor) => {
 
   if (myQueue.length > 0) lastFloor = myQueue[myQueue.length - 1];
   else lastFloor = elevatorsArr[0].floor;
+  
   let time = elevatorsArr[0].time + 0.5 * Math.abs(lastFloor - floor);
 
   for (let i = 0; i < elevatorsArr.length; i++) {
