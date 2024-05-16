@@ -25,7 +25,7 @@ floorsElevators.style.height = `${(7 + floorHeightInt) * numberOfFloors}px`;
 
 document.addEventListener("DOMContentLoaded", () => {
   // add  floors
-  for (let i = numberOfFloors - 1; i >= 0; i--) {
+  for (let i = 0; i < numberOfFloors; i++) {
     buildingFloors.appendChild(floor(i, addToQueue));
   }
 
@@ -51,11 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/** 
-    since the floors are build from buttom to top the list of floors and timers or backwords
-    num variable handles that
-**/
-
 const moveFloor = (elevator) => {
   // on arrivel to floor play sound
   audio.play();
@@ -63,11 +58,14 @@ const moveFloor = (elevator) => {
   // new current floor
   const floor = elevator.queue[0];
 
-  const num = floors.length - floor - 1;
+
+
+
+
   // change floor button back to gray
-  floors[num].classList.remove("active");
+  floors[floor].classList.remove("active");
   // hide floor timer
-  timers[num].classList.remove("active");
+  timers[floor].classList.remove("active");
 
   // add 2 seconds of stay after arrival
   setTimeout(() => {
@@ -81,23 +79,22 @@ const moveFloor = (elevator) => {
 };
 
 const addToQueue = (floor) => {
-  const num = floors.length - floor - 1;
   // can not call a floor again while it's called already
-  if (floors[num].classList.contains("active")) return;
+  if (floors[floor].classList.contains("active")) return;
 
   // can not call an elevator if theres current one on the same floor
   for (let i = 0; i < elevatorsArr.length; i++) {
     if (floor == elevatorsArr[i].floor) {
       // change floor button to red for 0.5 seconds
-      floors[num].classList.add("error");
+      floors[floor].classList.add("error");
       setTimeout(() => {
-          floors[num].classList.remove("error");
+          floors[floor].classList.remove("error");
       }, 500);
       return;
     }
   }
   // change floor button to green to show activity
-  floors[num].classList.add("active");
+  floors[floor].classList.add("active");
 
   /**
     get the best elevator to come to this floor in the shorteds time 
@@ -112,7 +109,7 @@ const addToQueue = (floor) => {
 
   if (myQueue.length > 0) lastFloor = myQueue[myQueue.length - 1];
   else lastFloor = elevatorsArr[0].floor;
-  
+
   let time = elevatorsArr[0].time + 0.5 * Math.abs(lastFloor - floor);
 
   for (let i = 0; i < elevatorsArr.length; i++) {
@@ -139,16 +136,16 @@ const addToQueue = (floor) => {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
   // change floor timer to the time until elevator arrival
-  timers[num].textContent = timeFormat(time);
+  timers[floor].textContent = timeFormat(time);
   // show floor timer
-  timers[num].classList.add("active");
+  timers[floor].classList.add("active");
 
   // change floor timer every second until arrival
   const timer = setInterval(() => {
     if (time >= 1) {
       time--;
     }
-    timers[num].textContent = timeFormat(time);
+    timers[floor].textContent = timeFormat(time);
 
     if (time <= 0) {
       clearInterval(timer);
